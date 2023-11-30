@@ -1,27 +1,43 @@
 # NSFW API
 
+本项目基于 [arnidan/nsfw-api](https://github.com/arnidan/nsfw-api) 进行复刻。在原项目的基础上，新增了支持跨域请求的功能。
+
+使用方法保持不变，与原项目相同。
+
+新的Docker运行指令如下所示：
+
+```
+docker run -p 3000:3000 ghcr.io/cr-zhichen/nsfw-api:latest
+```
+
+```
+docker run -p 3000:3000 ghcr.io/cr-zhichen/nsfw-api:latest-min
+```
+
+----
+
 [![build](https://github.com/arnidan/nsfw-api/actions/workflows/build.yml/badge.svg)](https://github.com/arnidan/nsfw-api/actions/workflows/build.yml)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](https://www.typescriptlang.org/)
 
-Wrapper around [NSFWJS](https://github.com/infinitered/nsfwjs) to provide API.
+围绕 [NSFWJS](https://github.com/infinitered/nsfwjs) 提供API的封装。
 
-## Usage
+## 使用方法
 
 ### Docker
 
-There are docker images bundled with models v3 from https://github.com/gantman/nsfw_model:
+有两个与 [NSFW模型v3](https://github.com/gantman/nsfw_model) 打包在一起的Docker镜像：
 
-* `ghcr.io/arnidan/nsfw-api:latest` - bundled with TensorflowJS 299x299 Image Model (better detection, as for me)
-* `ghcr.io/arnidan/nsfw-api:latest-min` - bundled with TensorflowJS Quantized 299x299 Image Model (see [#39](https://github.com/arnidan/nsfw-api/issues/49))
+* `ghcr.io/arnidan/nsfw-api:latest` - 打包了TensorflowJS 299x299图像模型（检测效果更好）
+* `ghcr.io/arnidan/nsfw-api:latest-min` - 打包了TensorflowJS量化299x299图像模型（参见 [#39](https://github.com/arnidan/nsfw-api/issues/49)）
 
-Each image is available for `linux/amd64` and `linux/arm64` platforms.
+每个镜像都支持 `linux/amd64` 和 `linux/arm64` 平台。
 
 ```
 docker run -p 3000:3000 ghcr.io/arnidan/nsfw-api:latest
 ```
 
 <details>
-    <summary>docker-compose.yml example</summary>
+    <summary>docker-compose.yml 示例</summary>
 
 ```yaml
 version: "3.9"
@@ -36,33 +52,33 @@ services:
 
 </details>
 
-### Manual deploy
+### 手动部署
 
-1. Clone the repo
-2. Download and unpack model from [models repo](https://github.com/gantman/nsfw_model) to `model` folder
-3. `yarn`
-4. `yarn build`
-5. `yarn start`
+1. 克隆仓库
+2. 从 [模型仓库](https://github.com/gantman/nsfw_model) 下载并解压模型到 `model` 文件夹
+3. 运行 `yarn`
+4. 运行 `yarn build`
+5. 运行 `yarn start`
 
-Now app started on port 3000.
+现在应用在3000端口启动。
 
-## API Methods
+## API 方法
 
 - POST /classify
 - POST /classify-many
 
 ### POST /classify
 
-#### Example of the request
+#### 请求示例
 
 ```http request
 POST /classify HTTP/1.1
 Content-Type: multipart/form-data
 ```
 
-Image should be provided in `image` field.
+图片应该在 `image` 字段中提供。
 
-#### Example of the response
+#### 响应示例
 
 ```
 HTTP/1.1 200 OK
@@ -80,16 +96,16 @@ Content-Type: application/json
 
 ### POST /classify-many
 
-#### Example of the request
+#### 请求示例
 
 ```http request
 POST /classify-many HTTP/1.1
 Content-Type: multipart/form-data
 ```
 
-Images should be provided in `images` field.
+图片应该在 `images` 字段中提供。
 
-#### Example of the response
+#### 响应示例
 
 ```
 HTTP/1.1 200 OK
